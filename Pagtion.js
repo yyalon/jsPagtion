@@ -39,7 +39,7 @@ js 分页组件，暂时只支持一个页面一个分页
             goPage: {
                 type: 1,
                 text: "go",
-                className: ""
+                className: "goPage"
             },
             pagtionType: 2,
             className: "",
@@ -237,7 +237,7 @@ js 分页组件，暂时只支持一个页面一个分页
                 if (currpage > pagtion.configData.toalPage) {
                     currpage = pagtion.configData.toalPage
                 }
-                pagtion.SetPage(currpage);
+                window.location = pagtion.GetPageUrlTmp().replace(/\$page\$/, currpage)
             });
             $(ul).find("input[type='text']").keypress(function (e) {
                 if (e && e.keyCode == 13) {
