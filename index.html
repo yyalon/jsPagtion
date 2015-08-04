@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="jquery-1.8.2.min.js"></script>
+    <script src="Pagtion.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/Pagtion.css">
+</head>
+<body>
+    <div id="t"></div>
+    <script type="text/javascript">
+    $(function(){
+        pagtion.Config({
+        pageSize: 4,
+        btnNumber: 4,
+        firstPage: false,
+            prevPage: {
+                text: "«",
+                disabledClass: "disabled",
+                isShowAlway: true
+            },
+            nextPage: {
+                text: "»",
+                disabledClass: "disabled",
+                isShowAlway: true
+            },
+            lastPage: false,
+            morePage: {
+                text: "...",
+                disabledClass: "disabled",
+                isShowAlway: false
+            },
+            goPage:{
+                type: 1,
+                text: "go",
+                className: "goPage"
+            },
+        className: "pagination",
+        activeBtnClass: "active",
+        element: "#t",
+        ajaxUrl: "/1.ashx?page=$page$", //http://dsds.com/getdata?page=$page$&.....
+        ajaxSuccess: function(data) {
+            //alert(data.data);
+        } 
+    });
+    })
+    </script>
+</body>
+</html>
