@@ -7,7 +7,7 @@ public class _1 : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
-        object o=new {totalRow=10,data="dsd"};
+        object o=new {totalRow=10080,data=context.Request["pageSize"]};
         System.Web.Script.Serialization.JavaScriptSerializer s = new System.Web.Script.Serialization.JavaScriptSerializer();
         context.Response.Write(s.Serialize(o));
     }

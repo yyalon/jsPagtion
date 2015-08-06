@@ -2,7 +2,7 @@
 js 分页组件，暂时只支持一个页面一个分页
 如果有一个页面有多个分页部分，另请高明
 */
-(function (win) {
+;(function (win) {
     win.pagtion = {
         //分页配置参数
         configData: {
@@ -104,6 +104,7 @@ js 分页组件，暂时只支持一个页面一个分页
         GetAjaxData: function () {
             var url = this.configData.ajaxUrl.replace(/\$page\$/, this.configData.currentPage);
             var context = this;
+            url=url+"&pageSize="+context.configData.pageSize;
             context.configData.ajaxStar(context.configData);
             $.ajax({
                 type: context.configData.type,
@@ -161,17 +162,21 @@ js 分页组件，暂时只支持一个页面一个分页
             }
             //计算显示分页按钮的开始按钮索引和结束索引
             var pageBtnEndIndex = 0;
-            if (this.configData.currentPage % this.configData.btnNumber == 0) {
-                pageBtnEndIndex = this.configData.currentPage;
-            } else {
-                pageBtnEndIndex = (parseInt(this.configData.currentPage / this.configData.btnNumber) + 1) * this.configData.btnNumber;
+            var pageBtnStartIndex=0;
+            if(this.configData.currentPage>=this.configData.btnNumber)
+            {
+                pageBtnStartIndex=this.configData.currentPage-parseInt(this.configData.btnNumber/2);
+                pageBtnEndIndex=this.configData.currentPage+parseInt(this.configData.btnNumber/2);
+            }else
+            {
+                pageBtnStartIndex=1;
+                pageBtnEndIndex=this.configData.btnNumber;
             }
-            var pageBtnStartIndex = pageBtnEndIndex - this.configData.btnNumber + 1;
             //如果最大页码大于总页数，那么最大页码=总页数
             if (pageBtnEndIndex > this.configData.toalPage) {
                 pageBtnEndIndex = this.configData.toalPage;
             }
-            if (this.configData.pagtionType == 2 && pageBtnStartIndex > this.configData.btnNumber) {
+            if (this.configData.pagtionType == 2 && this.configData.currentPage>=this.configData.btnNumber) {
                 pageHtml += '<li><a href="' + url.replace(/\$page\$/, 1) + '" data-index="1">1</a></li>';
                 pageHtml += '<li><a href="' + url.replace(/\$page\$/, (parseInt(pageBtnStartIndex) - 1)) + '" >' + this.configData.morePage.text + '</a></li>';
             }
@@ -250,9 +255,9 @@ js 分页组件，暂时只支持一个页面一个分页
                         currpage = 1;
                     }
                     if (currpage > pagtion.configData.toalPage) {
-                        currpage = pagtion.configData.toalPage
+                         currpage = pagtion.configData.toalPage
                     }
-                    pagtion.SetPage(currpage);
+                    window.location = pagtion.GetPageUrlTmp().replace(/\$page\$/, currpage);   
                 }
             });
             $(this.configData.element).html(ul);
